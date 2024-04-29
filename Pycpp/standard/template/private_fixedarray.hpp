@@ -15,6 +15,8 @@ namespace pycpp
 	template<u32 Capacity, std::enable_if_t<(Capacity > 0u), bool> = true>
 	class __FixedArray
 	{
+		class iterator;
+
 	protected:
 		Object* data[Capacity];
 		u32 len;
@@ -172,6 +174,16 @@ namespace pycpp
 
 		#pragma region Standard Methods
 
+		Iterator* first()
+		{
+			return iterator(this, 0);
+		}
+
+		Iterator* last()
+		{
+			return iterator(this, i32(len) - 1u);
+		}
+
 		void output()
 		{
 			std::string content;
@@ -216,7 +228,10 @@ namespace pycpp
 				pycpp::swap(data[i], data[j]);
 		}
 
-		void sort();
+		void sort()
+		{
+			pycpp::shell_sort(data, len);
+		}
 
 		bool push(Object* item)
 		{
@@ -546,6 +561,96 @@ namespace pycpp
 	#pragma endregion
 
 	#pragma region Iterator
+	public:
+
+		class iterator final : public Iterator, public Object
+		{
+			__FixedArray* container;
+			i32 index;
+
+			friend __FixedArray;
+			iterator(__FixedArray* container, i32 index) :
+				container(container), index(index)
+			{
+				INREF(container);
+			}
+
+			~iterator()
+			{
+				DEREF(container);
+				SAFE(container);
+			}
+
+		public:
+			TYPE_ID(__FixedArray::iterator);
+
+			i64 type() override
+			{
+				return type_id;
+			}
+
+			std::string class_name() override
+			{
+				return typeid(__FixedArray::iterator).name();
+			}
+
+			u32 bytes() override
+			{
+				return sizeof(__FixedArray::iterator);
+			}
+
+			bool is_valid() override
+			{
+				return index >= 0 && index < i32(container->len);
+			}
+
+			void next() override
+			{
+				if (index >= i32(container->len))
+				{
+					char block_location[64];
+					std::sprintf(block_location, "%s::iterator::next",
+						dynamic_cast<Object*>(container)->class_name().c_str());
+
+					__pycpp_error_out_of_bound_error(block_location);
+					return;
+				}
+
+				++index;
+			}
+
+			void prev() override
+			{
+				if (index < 0)
+				{
+					char block_location[64];
+					std::sprintf(block_location, "%s::iterator::prev",
+						dynamic_cast<Object*>(container)->class_name().c_str());
+
+					__pycpp_error_out_of_bound_error(block_location);
+					return;
+				}
+
+				--index;
+			}
+
+			Object* get() override
+			{
+				if (is_valid() == false)
+				{
+					char block_location[64];
+					std::sprintf(block_location, "%s::iterator::get",
+						dynamic_cast<Object*>(container)->class_name().c_str());
+
+					__pycpp_error_out_of_bound_error(block_location);
+					return nullptr;
+				}
+
+				return container->data[index];
+			}
+
+
+		};
 
 	#pragma endregion
 

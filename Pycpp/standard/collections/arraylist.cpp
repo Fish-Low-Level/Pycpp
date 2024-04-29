@@ -261,6 +261,11 @@ namespace pycpp
 		__Array::remove(index);
 	}
 
+	void ArrayList::sort() 
+	{
+		__Array::sort();
+	}
+
 	#pragma endregion
 
 #pragma endregion

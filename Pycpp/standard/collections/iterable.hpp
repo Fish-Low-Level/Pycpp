@@ -139,8 +139,11 @@ public:
 		// Tùy loại Container mà nó sẽ quyết định vị trí phần tử cần lấy.
 		virtual Object* pop() = 0;
 
-		/// Thêm các phần tử trong Iterable vào Container.
+		// Thêm các phần tử trong Iterable vào Container.
 		virtual void extend(Iterable*);
+
+		// Thêm các phần tử trong {Object ..} vào Container.
+		// virtual void extend(std::initializer_list<Object*> list);
 	};
 
 #pragma endregion
@@ -166,6 +169,9 @@ public:
 
 		// Xóa một phần tử tại vị trí "index".
 		virtual void remove(i32 index) = 0;
+
+		// Sắp xếp tăng dần
+		virtual void sort() = 0;
 
 		///==========     Override Object     ==========///
 

@@ -31,7 +31,7 @@ namespace pycpp
 		throw std::exception("Error : binding error !");
 	}
 
-	void __pycpp_error_out_of_bound_error(const char* block_location)
+	void __pycpp_error_out_of_bound(const char* block_location)
 	{
 		char content_error[128];
 		sprintf_s(content_error,

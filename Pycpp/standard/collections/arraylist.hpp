@@ -26,12 +26,6 @@ namespace pycpp
 
 		#pragma endregion
 
-		#pragma region Standard Methods
-
-		
-
-		#pragma endregion
-
 		#pragma region Override Object
 
 		i64 type() override;
@@ -93,6 +87,9 @@ namespace pycpp
 
 		// Xóa một phần tử tại vị trí "index".
 		void remove(i32 index) override;
+
+		// Sắp xếp tăng dần
+		void sort() override;
 
 		#pragma endregion
 

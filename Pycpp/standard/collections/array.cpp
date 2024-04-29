@@ -334,6 +334,11 @@ namespace pycpp
 			pycpp::swap(data[i], data[j]);
 	}
 
+	void __Array::sort()
+	{
+		pycpp::shell_sort(data, len);
+	}
+
 	void __Array::shrink_to_fit()
 	{
 		grow_with_capacity(len);

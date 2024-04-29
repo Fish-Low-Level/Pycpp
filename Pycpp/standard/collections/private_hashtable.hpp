@@ -3,12 +3,15 @@
 #include "../base/object.hpp"
 #include "iterable.hpp"
 #include "array.hpp"
+#include "deque.hpp"
 
 #include <initializer_list>
 
 namespace pycpp
 {
 	class __Array;
+	class __HashTable;
+	class Deque;
 
 #pragma region Declaration : struct Entry
 
@@ -42,6 +45,7 @@ namespace pycpp
 	class __HashTable
 	{
 		friend __Array;
+		friend Deque;
 
 	public:
 		class iterator;

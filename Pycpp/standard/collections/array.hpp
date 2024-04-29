@@ -5,10 +5,13 @@
 #include "iterable.hpp"
 #include "arrange.hpp"
 #include "private_hashtable.hpp"
+#include "deque.hpp"
 
 namespace pycpp
 {
+	class __Array;
 	class __HashTable;
+	class Deque;
 
 #pragma region Declaration : Private Array
 
@@ -115,6 +118,7 @@ namespace pycpp
 	class __Array
 	{
 		friend __HashTable;
+		friend Deque;
 
 	#pragma region __Array
 
@@ -189,8 +193,10 @@ namespace pycpp
 		void output(std::string& out);
 		void clear();
 		void reverse();
+		void sort();
 		void shrink_to_fit();
 		bool contains(Object*);
+
 
 		Object* get(i32 index);
 		void assign(i32 index, Object*);
